@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link href="styles.css" rel="stylesheet" />
+	<title>Latihan 2</title>
+	<style>
+		#about{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	
+	<div class="row justify-content-md-center">
+		<header class="jumbotron">
+			<h1 class="mb-1">Top <strong>Movies</strong></h1>
+	    <p><span class="bg-warning">Best Movies</span> of 2017</p>
+	    <form id="search-movies">
+	    	<div class="input-group mb-2">
+	        <div class="input-group-prepend">
+	          <div class="input-group-text">@</div>
+	        </div>
+	      	<input type="text" placeholder="Search Movies..." class="form-control" />
+	    	</div>
+	    </form>
+
+	    <ul class="tabs">
+	    	<li data-target="#about" class="active">About</li>
+      		<li data-target="#movies-list">Movies</li> 	
+    	</ul>
+	  </header>
+
+		<div class="col-sm-6">	
+			<div id="movies-list" class="panel">
+				<div class="card">
+					<div class="card-body">
+						<h4>List <strong>Movies.</strong></h4>
+						<div class="form-group">
+							<!-- <input type="checkbox" id="hide" />
+					  	<label for="hide">Hide all movies</label> -->
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="hide">
+							  <label class="custom-control-label" for="hide">Hide All Movies</label>
+							</div>
+						</div>
+						<form id="add-movie">
+							<div class="form-group">
+								<input type="text" placeholder="Add a Movie..." class="form-control" />
+								<!-- <div class="invalid-feedback">Please choose a email.</div>
+								<div class="valid-feedback">Looks good!</div> -->
+							</div>
+							<button class="btn" disabled >Submit</button>
+					  </form>
+					</div>
+				</div>
+
+				<div class="errors"></div>
+
+		  	<ul class="list-group">
+		  		<li class="list-group-item">
+		  			<span class="name">Mission: Impossible 5 Rogue Nation</span>
+		  			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+		  		</li>
+		  		<li class="list-group-item">
+		  			<span class="name">X-Men: Apocalypse</span>
+		  			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+		  		</li>
+		  		<li class="list-group-item">
+		  			<span class="name">Captain American: Civil War</span>
+		  			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+		  		</li>
+		  		<li class="list-group-item">
+		  			<span class="name">Furious 7</span>
+		  			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+		  		</li>
+		  		<li class="list-group-item">
+		  			<span class="name">Avengers: Age of Ultron</span>
+		  			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+		  		</li>
+		  	</ul>
+	  	</div>
+
+			<div class="panel" id="about">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="mt-3">Tentang <strong>Kami...</strong></h5>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id nunc porta urna ornare rhoncus. Ut convallis ante at.</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+	let movies = document.querySelector('#movies-list');
+	let about = document.querySelector('#about');
+	let li = document.querySelectorAll('li');
+	
+	let listGroup = document.querySelector('.list-group');
+	let btnRem = document.querySelectorAll('.btn-remove');
+	// search
+	let input = document.querySelectorAll('input');
+	let name = document.querySelectorAll('.name');
+
+
+
+	li.forEach( (e) =>{
+		
+		let dataTarget = e.getAttribute('data-target')
+			if(dataTarget == '#about'){
+				e.onclick = () => {
+					about.style.display = 'block';
+					movies.style.display = 'none';
+				}
+			}else{
+				e.onclick = () => {
+
+					about.style.display = 'none';
+					movies.style.display = 'block';
+				}
+			}		
+	});
+
+	// Hide All Movies
+	let hide = document.getElementById('hide');
+	hide.onclick = ()=>{
+		hide.checked  ? listGroup.style.display = 'none' :listGroup.style.display = 'block' 
+	}
+
+	
+	// fungsi hapus
+	function hapus(){
+		this.parentElement.remove()
+	}
+
+
+// add-movie
+	let isi = input[2].value;
+	let btn = document.querySelector('button');
+
+	input[2].onblur = (e)=>{
+			
+		input[2].classList.add('is-invalid')  
+	}
+	input[2].onkeyup = (e) =>{
+		btn.removeAttribute('disabled');
+
+		input[2].classList.remove('is-invalid')  
+	}
+	input[2].onfocus = () => {
+		input[2].classList.remove('is-invalid')  
+	}
+	if(input[2] != ''){
+		input[2].classList.remove('is-invalid');
+	}
+
+	function search(){
+		for(var i =0; i<name.length;i++){
+				var filter = this.value.toUpperCase();
+				if(name[i].innerHTML.toUpperCase().indexOf(filter) > -1){
+					name[i].parentElement.style.display = "";
+				}else{
+					name[i].parentElement.style.display = "none";
+				}
+			}
+	}
+
+	btn.addEventListener('click', function(e){
+		e.preventDefault();
+		var isi = input[2].value;
+		listGroup.insertAdjacentHTML('beforeend', `<li class="list-group-item">
+    			<span class="name">${isi}</span>
+    			<span class="btn btn-sm btn-danger btn-remove">delete</span>
+    		</li>`);
+		input[2].value = '';
+
+		var list = document.querySelectorAll('.list-group-item');
+		list.forEach((e)=>{
+				e.onclick = function(){
+				e.remove()
+			}	
+		});
+
+		//search
+		input[0].onkeyup = search
+	})
+	
+	btnRem.forEach((e,i)=>{
+		e.onclick = hapus
+	});
+	
+	input[0].onkeyup = search
+	
+</script>
+</body>
+</html>

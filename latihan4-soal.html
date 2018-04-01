@@ -1,0 +1,64 @@
+<!-- Pertemuan 7 : Point 30 -->
+<!-- 
+Membuat Add/Remove Input Fields Dynamically
+
+1. Gunakan insertAdjacentElement
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Latihan 4</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		body {
+			margin: 5% 10%;
+			font-family: sans-serif;
+		}
+
+		button {
+			cursor: pointer;
+		}
+
+		.close {
+			padding: 5px !important
+		}
+	</style>
+</head>
+<body>
+
+<h3>#Pertemuan 6.</h3>
+<p>Masih Seputar Javascript DOM. </p>
+
+<div class="form-group">
+	<button class="btn btn-sm btn-success">+</button>
+</div>
+<div class="form-group form-inline">
+	<input type="text" placeholder="Nama Materi" class="form-control form-control-sm">
+</div>
+
+<button class="btn btn-primary btn-sm">Simpan</button>
+<script>
+	// Tulis Scriptnya:
+	let btn = document.querySelector('.btn-success');
+	let formInline = document.querySelector('.form-inline');
+
+	hapus = function(){ 
+		this.parentElement.remove()
+	}
+	add = () =>{
+		let div = document.createElement('div');
+		div.innerHTML = `<div class="form-group form-inline">
+							<input type="text" placeholder="Nama Materi" class="form-control form-control-sm">
+							<button class="close">x</button>
+						</div>`;
+		formInline.insertAdjacentElement('afterend', div);
+		let close = document.querySelector('.close');
+		close.onclick = hapus
+	}
+
+	btn.addEventListener('click', add);
+
+</script>
+</body>
+</html>

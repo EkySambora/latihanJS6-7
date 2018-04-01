@@ -1,0 +1,63 @@
+<!-- Pertemuan 7 : Point 30 -->
+
+<!-- 
+Memilih Efek Hover yg dihasilkan:
+Efek hovernya terdiri dari Merah, Hijau, Biru
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Latihan 6</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		body {
+			margin: 5% 10%;
+			font-family: sans-serif;
+		}
+
+		button {
+			cursor: pointer;
+		}
+
+		.form-check-input {margin-left: 0; margin-top: 6px}
+	</style>
+</head>
+<body>
+	<h3>#Pertemuan 6.</h3>
+	<p>Masih Seputar Javascript DOM. </p>
+	
+	<div class="form-check form-check-inline">
+	  <input class="form-check-input" type="radio" name="color" id="merah" value="alert-danger">
+	  <label class="form-check-label" for="merah">Merah</label>
+	</div>
+	<div class="form-check form-check-inline">
+	  <input class="form-check-input" type="radio" name="color" id="hijau" value="alert-success">
+	  <label class="form-check-label" for="hijau">Hijau</label>
+	</div>
+	<div class="form-check form-check-inline">
+	  <input class="form-check-input" type="radio" name="color" id="biru" value="alert-info">
+	  <label class="form-check-label" for="biru">Biru</label>
+	</div>
+
+<script>
+// Tulis Script.
+	let div = document.querySelectorAll('div');
+
+	div.forEach((e, i)=>{
+		e.addEventListener('change', function(){
+			e.parentElement.children[1].className = e.firstElementChild.value;
+			
+			console.log(e.firstElementChild.id);
+
+			if(e.firstElementChild.checked){
+				e.classList.add('p-3', e.firstElementChild.value);
+				// console.log(e)
+			}else{
+				e.classList.remove('p-3', e.firstElementChild.value);
+			}
+		})
+	})
+</script>
+</body>
+</html>
